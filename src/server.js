@@ -6,7 +6,7 @@ const app = express();
 
 const port = config.port;
 
-app.listen(app, ()=>{
+app.listen(port, ()=>{
     console.log(`Server will running on port ${port}`);
 
 });
