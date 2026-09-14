@@ -1,11 +1,14 @@
 const express = require("express");
+const logger = require("./middleware/logger");
 
 const app = express();
 
-app.get("/health",(req, res) =>{
-    res.send({
-  "status": "ok"
-})
-}) 
+app.use(logger)
 
-module.exports = app
+app.get("/health", ( req, res ) => {
+  res.json({
+    status: "ok",
+  });
+});
+
+module.exports = app;
