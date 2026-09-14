@@ -1,14 +1,10 @@
 const express = require("express");
 const logger = require("./middleware/logger");
+const healthRouter = require("./routes/health.routes");
 
 const app = express();
 
 app.use(logger)
-
-app.get("/health", ( req, res ) => {
-  res.json({
-    status: "ok",
-  });
-});
+app.use(healthRouter)
 
 module.exports = app;
