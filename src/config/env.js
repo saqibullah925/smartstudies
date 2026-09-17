@@ -1,5 +1,16 @@
+// require("dotenv").config();
+// const config = {
+//      port: Number(process.env.PORT) || 5000,
+// };
+// module.exports = config;
+
+
 require("dotenv").config();
-const config = {
-     port: Number(process.env.PORT) || 5000,
+
+const port = Number(process.env.PORT) || 5000;
+const mongoUri = process.env.MONGO_URI;
+
+module.exports = {
+    port,
+    mongoUri,
 };
-module.exports = config;
