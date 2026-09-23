@@ -14,4 +14,5 @@ const jwtSecret = process.env.JWT_SECRET;
 module.exports = {
     port,
     mongoUri,
+    jwtSecret
 };
