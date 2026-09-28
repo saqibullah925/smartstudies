@@ -11,7 +11,7 @@ const register = async( req, res )=>{
        });
 
        return res.status(201).json({
-        message: "User registered successffully", user
+        message: "User registered successfully", user
        });
 
     } catch(error){
@@ -27,7 +27,7 @@ const login = async(req, res)=>{
             password
         });
         return res.status(200).json({
-            message: "User logged in succesffully",
+            message: "User logged in successfully",
             ...result
         });
     } catch (error){
