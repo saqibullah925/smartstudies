@@ -1,24 +1,25 @@
 const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: true,
+const subjectSchema = new mongoose.Schema(
+    {
+        name: {
+            type: String,
+            required: true
+        },
+
+        description: {
+            type: String
+        },
+
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true,
+            ref: "User"
+        }
     },
-    description: {
-      type: String,
-      required: optional,
-    },
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "User",
-    },
-  },
-  {
-    timestamps: true,
-  },
+    {
+        timestamps: true
+    }
 );
 
 const Subject = mongoose.model("Subject", subjectSchema);
