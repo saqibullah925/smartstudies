@@ -1,0 +1,26 @@
+const mongoose = require("mongoose");
+
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: optional,
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
+  },
+  {
+    timestamps: true,
+  },
+);
+
+const Subject = mongoose.model("Subject", subjectSchema);
+
+module.exports = Subject;

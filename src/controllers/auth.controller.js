@@ -1,3 +1,4 @@
+const User = require("../models/user.model");
 const authService = require("../services/auth.service");
 
 const register = async( req, res )=>{
@@ -35,8 +36,19 @@ const login = async(req, res)=>{
     }
 };
 
+const getMe = async(userId)=>{
+    const user = await User.findById(userId).select("password");
+
+    if(!user){
+        throw new Error ("User not found");
+    };
+
+    return user; 
+}
+
 
 module.exports = {
     register,
-    login
+    login,
+    getMe
 };
