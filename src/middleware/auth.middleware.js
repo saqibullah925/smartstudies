@@ -5,6 +5,7 @@ const authMiddleware = (req, res, next) => {
   try {
     // Get Authorization header
     const authHeader = req.headers.authorization;
+    console.log("Authorization header:", req.headers.authorization);
 
     // Check if Authorization header exists
     if (!authHeader) {

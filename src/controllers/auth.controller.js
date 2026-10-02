@@ -36,15 +36,27 @@ const login = async(req, res)=>{
     }
 };
 
-const getMe = async(userId)=>{
-    const user = await User.findById(userId).select("password");
+const getMe = async (req, res) => {
+    try {
+        const userId = req.user.userId;
 
-    if(!user){
-        throw new Error ("User not found");
-    };
+        const user = await User.findById(userId).select("-password");
 
-    return user; 
-}
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found",
+            });
+        }
+
+        return res.status(200).json({
+            user,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message || "Internal server error",
+        });
+    }
+};
 
 
 module.exports = {

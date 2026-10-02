@@ -22,7 +22,7 @@ const register = async ({ name, email, password }) => {
 
     const user = new User({
         name,
-        email,
+        email: normalizedEmail,
         password: hashedPassword
     });
 
@@ -47,7 +47,11 @@ const login = async ({ email, password }) => {
 
     };
     // 2. Find user
-    const user = await User.findOne({ email });
+    const normalizedEmail = email.trim().toLowerCase()
+    // const user = await User.findOne({ email });
+    const user = await User.findOne({
+        email: normalizedEmail
+    });
 
 
     // 3. Check user

@@ -10,6 +10,15 @@ const createSubject = async({name, description, userId})=>{
     return subject;
 };
 
+const getSubjects = async (userId) => {
+    const subjects = await Subject.find({
+        user: userId,
+    });
+
+    return subjects;
+};
+
 module.exports = {
-    createSubject
+    createSubject,
+    getSubjects,
 };
