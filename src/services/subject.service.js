@@ -29,15 +29,36 @@ const getSubjectById = async (subjectId, userId) => {
     return subject;
 };
 
-const updateSubject = async (subjectId, userId) =>{
-    const subject = await Subject.findByIdAndUpdate({
-        _id: subjectId,
-    });
+const updateSubject = async (subjectId, userId) => {
+    const subject = await Subject.findOneAndUpdate(
+        {
+            _id: subjectId,
+            user: userId,
+        },
+        {
+            $set: updateData,
+        },
+        {
+            new: true,
+        }
+
+    );
     return subject;
-}
+};
+
+const deleteSubject = async (subjectId, userId) => {
+    const subject = await Subject.findOneAndDelete({
+        _id: subjectId,
+        user: userId,
+    }); 
+    return subject;
+};
+
 
 module.exports = {
     createSubject,
     getSubjects,
     getSubjectById,
+    updateSubject,
+    deleteSubject
 };

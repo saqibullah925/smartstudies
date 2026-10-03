@@ -4,6 +4,7 @@ const logger = require("./middleware/logger");
 const healthRouter = require("./routes/health.routes");
 const  authRouter = require("./routes/auth.routes");
 const subjectRoutes = require("./routes/subject.routes");
+const examRoutes = require("./routes/exam.routes");
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(logger);
 app.use(healthRouter);
 app.use("/users", authRouter);
 app.use("/subjects", subjectRoutes );
+app.use("/exams", examRoutes);
 
 
 module.exports = app;

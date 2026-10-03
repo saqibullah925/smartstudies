@@ -69,20 +69,24 @@ const getSubjectById = async (req, res) => {
 
 const updateSubject = async (req, res) => {
     try {
+        //
         const subjectId = req.params.id;
         const userId = req.user.userId;
 
+        // Get updated data from request body
         const { name, description } = req.body;
 
+        // Call service to update subject
         const subject = await subjectService.updateSubject(subjectId, userId, { name, description }
             
         );
+        // Check if subject exists
         if (!subject) {
             return res.status(404).json({
                 message: "Subject not found",
             });
         }
-        
+        // Return updated subject
         return res.status(200).json({
             subject,
         });
@@ -93,9 +97,30 @@ const updateSubject = async (req, res) => {
     }
 };
 
+const deleteSubject = async (req, res) => {
+    try{
+        const subjectId = req.params.id;
+        const userId = req.user.userId;
+
+        const subject = await subjectService.deleteSubject(subjectId, userId);
+
+        if(!subject){
+            return res.status(404).json({
+                message: "Subject not found",
+            });
+        }
+    } catch (error) {
+        return res.status(error.statusCode || 500).json({
+            message: error.message || "Internal server error",
+        });     
+    }   
+};
+
+
 module.exports = {
     createSubject,
     getSubjects,
     getSubjectById,
-    updateSubject
+    updateSubject,
+    deleteSubject
 };
