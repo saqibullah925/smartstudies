@@ -29,6 +29,13 @@ const getSubjectById = async (subjectId, userId) => {
     return subject;
 };
 
+const updateSubject = async (subjectId, userId) =>{
+    const subject = await Subject.findByIdAndUpdate({
+        _id: subjectId,
+    });
+    return subject;
+}
+
 module.exports = {
     createSubject,
     getSubjects,

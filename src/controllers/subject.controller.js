@@ -8,26 +8,25 @@ const createSubject = async (req, res) => {
         // Get from authenticated user
         const userId = req.user.userId;
 
-         // Call service
+        // Call service
         const subject = await subjectService.createSubject({
             name,
             description,
             userId,
-
         });
 
         // Return created subject
         return res.status(201).json({
-            message:"Subject was created successfully",
-            subject
-        })
-
+            message: "Subject was created successfully",
+            subject,
+        });
     } catch (error) {
         // error response
-        return res.status(error.statusCode || 500).json({ message: error.message || "Internal server error" });
+        return res
+            .status(error.statusCode || 500)
+            .json({ message: error.message || "Internal server error" });
     }
-
-}
+};
 
 const getSubjects = async (req, res) => {
     try {
@@ -45,23 +44,58 @@ const getSubjects = async (req, res) => {
     }
 };
 
-const getSubjectById = async(req, res) =>{
-    try{
+const getSubjectById = async (req, res) => {
+    try {
         const subjectId = req.params.id;
         const userId = req.user.userId;
-        
+
+        const subject = await subjectService.getSubjectById(subjectId, userId);
+
+        if (!subject) {
+            return res.status(404).json({
+                message: "Subject not found",
+            });
+        }
+
         return res.status(200).json({
-            subject
-        })
-    } catch(error){
-        return res.status(error.statusCode || 404).json({
-            message: error.message || "Not found",
+            subject,
+        });
+    } catch (error) {
+        return res.status(error.statusCode || 500).json({
+            message: error.message || "Internal server error",
         });
     }
-}
+};
+
+const updateSubject = async (req, res) => {
+    try {
+        const subjectId = req.params.id;
+        const userId = req.user.userId;
+
+        const { name, description } = req.body;
+
+        const subject = await subjectService.updateSubject(subjectId, userId, { name, description }
+            
+        );
+        if (!subject) {
+            return res.status(404).json({
+                message: "Subject not found",
+            });
+        }
+        
+        return res.status(200).json({
+            subject,
+        });
+    } catch (error) {
+        return res.status(error.statusCode || 500).json({
+            message: error.message || "Internal server error",
+        });
+    }
+};
 
 module.exports = {
     createSubject,
     getSubjects,
-    getSubjectById
+    getSubjectById,
+    updateSubject
 };
