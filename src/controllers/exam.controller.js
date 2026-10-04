@@ -1,6 +1,6 @@
 const examService = require("../services/exam.service");
 
-const createExam = async (req, res) => {
+const createExam = async (req, res, next ) => {
     try {
         const { name, description, examDate, subject } = req.body;
         const userId = req.user.userId;
@@ -17,12 +17,12 @@ const createExam = async (req, res) => {
             exam,
         });
     } catch (error) {
-        res.status(error.statusCode || 500).json({ message: error.message });
+        next(error);
     }
 };
 
 // 
-const getExams = async (req, res) => {
+const getExams = async (req, res, next) => {
     try {
         const userId = req.user.userId;
 
@@ -32,13 +32,11 @@ const getExams = async (req, res) => {
             exams,
         });
     } catch (error) {
-        return res.status(error.statusCode || 500).json({
-            message: error.message || "Internal server error",
-        });
+        next(error);
     }
 };
 
-const getExamById = async (req, res) => {
+const getExamById = async (req, res, next ) => {
     try {
         const examId = req.params.id;
         const userId = req.user.userId;
@@ -58,13 +56,11 @@ const getExamById = async (req, res) => {
             exam,
         });
     } catch (error) {
-        return res.status(error.statusCode || 500).json({
-            message: error.message || "Internal server error",
-        });
+        next(error);
     }
 };
 
-const updateExam = async (req, res) => {
+const updateExam = async (req, res, next ) => {
     try {
         const examId = req.params.id;
         const userId = req.user.userId;
@@ -104,7 +100,7 @@ const updateExam = async (req, res) => {
     }
 };
 
-const deleteExam = async (req, res) => {
+const deleteExam = async (req, res, next ) => {
     try {
         const examId = req.params.id;
         const userId = req.user.userId;
@@ -124,9 +120,7 @@ const deleteExam = async (req, res) => {
             message: "Exam deleted successfully",
         });
     } catch (error) {
-        return res.status(error.statusCode || 500).json({
-            message: error.message || "Internal server error",
-        });
+        next(error);
     }
 };
 

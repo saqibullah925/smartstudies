@@ -68,20 +68,20 @@ const updateTask = async (
         status,
     }
 ) => {
-    if (studyPlanId) {
-        const studyPlan = await StudyPlan.findOne({
-            _id: studyPlanId,
-            user: userId,
-        });
+    if (studyPlanId !== undefined) {
+    const studyPlan = await StudyPlan.findOne({
+        _id: studyPlanId,
+        user: userId,
+    });
 
-        if (!studyPlan) {
-            const error = new Error(
-                "Study plan not found"
-            );
-            error.statusCode = 404;
-            throw error;
-        }
+    if (!studyPlan) {
+        const error = new Error(
+            "Study plan not found"
+        );
+        error.statusCode = 404;
+        throw error;
     }
+}
     const updateData = {};
 
     if (title !== undefined) {

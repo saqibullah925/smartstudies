@@ -48,17 +48,20 @@ const getExamById = async (examId, userId) => {
 };
 
 const updateExam = async (examId, userId, { name, description, examDate , subjectId}) => {
-    if(!subjectId !== undefined){
-        const subject = await Subject.findOne({
-            _id: subjectId,
-            user: userId,
-        });
-        if (!subject) {
-            const error = new Error("Subject not found or does not belong to the user");
-            error.statusCode = 404;
-            throw error;
-        };
-    };
+    if (subjectId !== undefined) {
+    const subject = await Subject.findOne({
+        _id: subjectId,
+        user: userId,
+    });
+
+    if (!subject) {
+        const error = new Error(
+            "Subject not found or does not belong to the user"
+        );
+        error.statusCode = 404;
+        throw error;
+    }
+}
 
 const updateData = {};
 

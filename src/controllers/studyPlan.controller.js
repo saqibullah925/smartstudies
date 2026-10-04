@@ -1,6 +1,6 @@
 const studyPlanService = require("../services/studyPlan.service");
 
-const createStudyPlan = async (req, res) => {
+const createStudyPlan = async (req, res, next) => {
     try {
         const {
             name,
@@ -28,13 +28,12 @@ const createStudyPlan = async (req, res) => {
             studyPlan,
         });
     } catch (error) {
-        return res.status(error.statusCode || 500).json({
-            message: error.message || "Internal server error",
-        });
-    }
-};
+        next(error);
+    };
+}
 
-const getStudyPlans = async (req, res) => {
+
+const getStudyPlans = async (req, res, next) => {
     try {
         const userId = req.user.userId;
 
@@ -45,13 +44,12 @@ const getStudyPlans = async (req, res) => {
             studyPlans,
         });
     } catch (error) {
-        return res.status(error.statusCode || 500).json({
-            message: error.message || "Internal server error",
-        });
+        next(error);
+
     }
 };
 
-const getStudyPlanById = async (req, res) => {
+const getStudyPlanById = async (req, res, next) => {
     try {
         const studyPlanId = req.params.id;
         const userId = req.user.userId;
@@ -72,13 +70,11 @@ const getStudyPlanById = async (req, res) => {
             studyPlan,
         });
     } catch (error) {
-        return res.status(error.statusCode || 500).json({
-            message: error.message || "Internal server error",
-        });
+        next(error);
     }
 };
 
-const updateStudyPlan = async (req, res) => {
+const updateStudyPlan = async (req, res, next) => {
     try {
         const studyPlanId = req.params.id;
         const userId = req.user.userId;
@@ -116,13 +112,11 @@ const updateStudyPlan = async (req, res) => {
             studyPlan,
         });
     } catch (error) {
-        return res.status(error.statusCode || 500).json({
-            message: error.message || "Internal server error",
-        });
-    }
-};
+        next(error);
+    };
+}
 
-const deleteStudyPlan = async (req, res) => {
+const deleteStudyPlan = async (req, res, next) => {
     try {
         const studyPlanId = req.params.id;
         const userId = req.user.userId;
@@ -142,9 +136,7 @@ const deleteStudyPlan = async (req, res) => {
             message: "Study plan deleted successfully",
         });
     } catch (error) {
-        return res.status(error.statusCode || 500).json({
-            message: error.message || "Internal server error",
-        });
+        next(error);
     }
 };
 

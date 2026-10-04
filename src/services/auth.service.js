@@ -18,7 +18,7 @@ const register = async ({ name, email, password }) => {
         throw error;
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 6);
 
     const user = new User({
         name,
@@ -51,7 +51,7 @@ const login = async ({ email, password }) => {
     // const user = await User.findOne({ email });
     const user = await User.findOne({
         email: normalizedEmail
-    });
+    }).select("+password")
 
 
     // 3. Check user

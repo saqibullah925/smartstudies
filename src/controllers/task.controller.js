@@ -1,6 +1,6 @@
 const taskService = require("../services/task.service");
 
-const createTask = async (req, res) => {
+const createTask = async (req, res, next) => {
     try {
         const {
             title,
@@ -26,15 +26,12 @@ const createTask = async (req, res) => {
             task,
         });
     } catch (error) {
-        return res.status(error.statusCode || 500).json({
-            message:
-                error.message || "Internal server error",
-        });
+        next(error);
     }
 };
 
 // 
-const getTasks = async (req, res) => {
+const getTasks = async (req, res, next) => {
     try {
         const userId = req.user.userId;
 
@@ -44,14 +41,11 @@ const getTasks = async (req, res) => {
             tasks,
         });
     } catch (error) {
-        return res.status(error.statusCode || 500).json({
-            message:
-                error.message || "Internal server error",
-        });
+       next(error);
     }
 };
 
-const getTaskById = async (req, res) => {
+const getTaskById = async (req, res, next) => {
     try {
         const taskId = req.params.id;
         const userId = req.user.userId;
@@ -71,14 +65,11 @@ const getTaskById = async (req, res) => {
             task,
         });
     } catch (error) {
-        return res.status(error.statusCode || 500).json({
-            message:
-                error.message || "Internal server error",
-        });
+        next(error);
     }
 };
 
-const updateTask = async (req, res) => {
+const updateTask = async (req, res, next) => {
     try {
         const taskId = req.params.id;
         const userId = req.user.userId;
@@ -114,14 +105,11 @@ const updateTask = async (req, res) => {
             task,
         });
     } catch (error) {
-        return res.status(error.statusCode || 500).json({
-            message:
-                error.message || "Internal server error",
-        });
+        next(error);
     }
 };
 
-const deleteTask = async (req, res) => {
+const deleteTask = async (req, res, next) => {
     try {
         const taskId = req.params.id;
         const userId = req.user.userId;
@@ -141,10 +129,7 @@ const deleteTask = async (req, res) => {
             message: "Task deleted successfully",
         });
     } catch (error) {
-        return res.status(error.statusCode || 500).json({
-            message:
-                error.message || "Internal server error",
-        });
+        next(error);
     }
 };
 

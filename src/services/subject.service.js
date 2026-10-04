@@ -29,8 +29,22 @@ const getSubjectById = async (subjectId, userId) => {
     return subject;
 };
 
-const updateSubject = async (subjectId, userId) => {
-    const subject = await Subject.findOneAndUpdate(
+const updateSubject = async (
+    subjectId,
+    userId,
+    { name, description }
+) => {
+    const updateData = {};
+
+    if (name !== undefined) {
+        updateData.name = name;
+    }
+
+    if (description !== undefined) {
+        updateData.description = description;
+    }
+
+    return await Subject.findOneAndUpdate(
         {
             _id: subjectId,
             user: userId,
@@ -41,9 +55,7 @@ const updateSubject = async (subjectId, userId) => {
         {
             new: true,
         }
-
     );
-    return subject;
 };
 
 const deleteSubject = async (subjectId, userId) => {
