@@ -1,10 +1,10 @@
 const Exam = require("../models/exam.model");
 const Subject = require("../models/subject.model");
 
-// 
+// Create a new exam
 const createExam = async ({name, description, examDate, subjectId, userId}) => {
     if(!name || !subjectId || !userId) {
-        throw new Error("Name, subjectId and userId are required");
+        const error = new Error("Name, subjectId and userId are required");
         error.statusCode = 400;
         throw error;
     }
@@ -15,14 +15,14 @@ const createExam = async ({name, description, examDate, subjectId, userId}) => {
         user: userId,
     });
 
-    // 
+    // If the subject does not exist or does not belong to the user, throw an error
     if (!subject) {
         const error = new Error("Subject not found or does not belong to the user");
         error.statusCode = 404;
         throw error;
     };
 
-    // 
+    // Create the exam 
     const exam = new Exam({
         name: name,
         description: description,   
@@ -35,15 +35,20 @@ const createExam = async ({name, description, examDate, subjectId, userId}) => {
 
 };
 
-const getExamsById = async (examId, userId) => {
+const getExams = async (userId) => {
+    return await Exam.find({ user: userId });
+};
+
+const getExamById = async (examId, userId) => {
     const exams = await Exam.findOne({
         _id: examId,
         user: userId,
     });
+    return exams;
 };
 
 const updateExam = async (examId, userId, { name, description, examDate , subjectId}) => {
-    if(!subjectId){
+    if(!subjectId !== undefined){
         const subject = await Subject.findOne({
             _id: subjectId,
             user: userId,
@@ -87,7 +92,8 @@ const deleteExam = async (examId, userId) => {
 
 module.exports = {
     createExam,
-    getExamsById,
+    getExams,
+    getExamById,
     updateExam,
     deleteExam  
 };

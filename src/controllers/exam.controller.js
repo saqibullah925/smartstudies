@@ -2,8 +2,8 @@ const examService = require("../services/exam.service");
 
 const createExam = async (req, res) => {
     try {
-        const { name, description, examDate, subjectId } = req.body;
-        const userId = req.user._id;
+        const { name, description, examDate, subject } = req.body;
+        const userId = req.user.userId;
 
         const exam = await examService.createExam({
             name,
